@@ -11,7 +11,7 @@ const Home = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const backendUrl = "http://localhost:3000";
+  const backendUrl = "https://backend-mmr-calculator.vercel.app/";
 
   const handleSearch = async () => {
     setLoading(true); // Inicia o indicador de carregamento
