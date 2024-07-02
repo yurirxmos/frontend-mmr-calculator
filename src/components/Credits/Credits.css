@@ -1,0 +1,17 @@
+.credits {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: start;
+    font-size: 9px;
+}
+
+.credits a {
+    text-decoration: none;
+    text-align: start;
+    color: rgb(125, 125, 125);
+}
