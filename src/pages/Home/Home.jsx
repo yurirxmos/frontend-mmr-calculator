@@ -2,6 +2,16 @@ import React, { useState } from "react";
 import "./Home.css";
 import axios from "axios";
 import Credits from "../../components/Credits/Credits";
+import bronze from "../../assets/imgs/elos/bronze.webp";
+import challenger from "../../assets/imgs/elos/challenger.webp";
+import diamond from "../../assets/imgs/elos/diamond.webp";
+import gold from "../../assets/imgs/elos/gold.webp";
+import emerald from "../../assets/imgs/elos/emerald.webp";
+import grandmaster from "../../assets/imgs/elos/grandmaster.webp";
+import iron from "../../assets/imgs/elos/iron.webp";
+import master from "../../assets/imgs/elos/master.webp";
+import platinum from "../../assets/imgs/elos/platinum.webp";
+import silver from "../../assets/imgs/elos/silver.webp";
 
 const Home = () => {
   const [gameName, setGameName] = useState("");
@@ -13,13 +23,29 @@ const Home = () => {
 
   const backendUrl = "https://backend-mmr-calculator.vercel.app/";
 
+  const tierList = {
+    IRON: iron,
+    BRONZE: bronze,
+    SILVER: silver,
+    GOLD: gold,
+    PLATINUM: platinum,
+    EMERALD: emerald,
+    DIAMOND: diamond,
+    MASTER: master,
+    GRANDMASTER: grandmaster,
+    CHALLENGER: challenger,
+  };
+
   const handleSearch = async () => {
     if (!gameName || !tagLine) {
       setError("Please enter both Game Name and Tag Line.");
       return;
     }
 
-    setLoading(true); // Start loading indicator
+    setEloData(null);
+    setLoading(true);
+    setError(null);
+
     try {
       const response = await axios.get(
         `${backendUrl}elo/${gameName}/${tagLine}`,
@@ -44,31 +70,19 @@ const Home = () => {
         );
       }
     } catch (error) {
+      console.log(error.response);
       if (error.response && error.response.status === 404) {
         setError("Player not found. Please check the Game Name and Tag Line.");
       } else {
-        setError(
-          "An error occurred during the request. Please check your internet connection and try again."
-        );
+        setError("An error occurred during the request.");
       }
     } finally {
-      setLoading(false); // End loading indicator
+      setLoading(false);
     }
   };
 
   const adjustElo = (tier) => {
-    const tierOrder = [
-      "IRON",
-      "BRONZE",
-      "SILVER",
-      "GOLD",
-      "PLATINUM",
-      "EMERALD",
-      "DIAMOND",
-      "MASTER",
-      "GRANDMASTER",
-      "CHALLENGER",
-    ];
+    const tierOrder = Object.keys(tierList);
     let tierIndex = tierOrder.indexOf(tier);
 
     if (lpRange === "5-16") {
@@ -121,7 +135,8 @@ const Home = () => {
         {eloData && !loading && (
           <div>
             {eloData.map((entry, index) => (
-              <div key={index}>
+              <div key={index} className="mmr">
+                <img src={tierList[entry.tier]} alt={entry.tier} />
                 <p>
                   This player has the MMR corresponding to: {entry.tier}
                 </p>
@@ -129,7 +144,7 @@ const Home = () => {
             ))}
           </div>
         )}
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <p style={{ color: "#F75555" }}>{error}</p>}
       </div>
 
       <Credits />
