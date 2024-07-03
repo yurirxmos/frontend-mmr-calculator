@@ -14,10 +14,15 @@ const Home = () => {
   const backendUrl = "https://backend-mmr-calculator.vercel.app/";
 
   const handleSearch = async () => {
-    setLoading(true); // Inicia o indicador de carregamento
+    if (!gameName || !tagLine) {
+      setError("Please enter both Game Name and Tag Line.");
+      return;
+    }
+
+    setLoading(true); // Start loading indicator
     try {
       const response = await axios.get(
-        `${backendUrl}/elo/${gameName}/${tagLine}`,
+        `${backendUrl}elo/${gameName}/${tagLine}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -35,15 +40,19 @@ const Home = () => {
         setError(null);
       } else {
         setError(
-          "Erro ao obter dados do jogador. Verifique o nome de invocador e a chave de API."
+          "Error retrieving player data. Check summoner name and API key."
         );
       }
     } catch (error) {
-      setError(
-        "Ocorreu um erro na solicitação. Verifique sua conexão com a internet e tente novamente."
-      );
+      if (error.response && error.response.status === 404) {
+        setError("Player not found. Please check the Game Name and Tag Line.");
+      } else {
+        setError(
+          "An error occurred during the request. Please check your internet connection and try again."
+        );
+      }
     } finally {
-      setLoading(false); // Finaliza o indicador de carregamento
+      setLoading(false); // End loading indicator
     }
   };
 
@@ -122,7 +131,6 @@ const Home = () => {
         )}
         {error && <p style={{ color: "red" }}>{error}</p>}
       </div>
-
 
       <Credits />
     </div>
