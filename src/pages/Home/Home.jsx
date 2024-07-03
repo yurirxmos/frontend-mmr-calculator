@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./Home.css";
 import axios from "axios";
 import Credits from "../../components/Credits/Credits";
+import logo from "../../assets/imgs/logo.png";
+import search_logo from "../../assets/imgs/search_logo.png";
 import bronze from "../../assets/imgs/elos/bronze.webp";
 import challenger from "../../assets/imgs/elos/challenger.webp";
 import diamond from "../../assets/imgs/elos/diamond.webp";
@@ -12,6 +14,12 @@ import iron from "../../assets/imgs/elos/iron.webp";
 import master from "../../assets/imgs/elos/master.webp";
 import platinum from "../../assets/imgs/elos/platinum.webp";
 import silver from "../../assets/imgs/elos/silver.webp";
+
+const LoadingAnimation = () => (
+  <div className="loading-animation">
+    <div className="spinner"></div>
+  </div>
+);
 
 const Home = () => {
   const [gameName, setGameName] = useState("");
@@ -36,7 +44,10 @@ const Home = () => {
     CHALLENGER: challenger,
   };
 
-  const handleSearch = async () => {
+  const handleSearch = async (event) => {
+    event.preventDefault();
+    setError(null);
+
     if (!gameName || !tagLine) {
       setError("Please enter both Game Name and Tag Line.");
       return;
@@ -99,21 +110,10 @@ const Home = () => {
   return (
     <div className="home">
       <div className="header">
-        <h1>MMR</h1>
-        <h2>CALCULATOR</h2>
+        <img src={logo} />
       </div>
 
-      <div className="lp">
-        <p>LP Gain</p>
-        <select value={lpRange} onChange={(e) => setLpRange(e.target.value)}>
-          <option value="5-16">5-16</option>
-          <option value="17-24">17-24</option>
-          <option value="25-29">25-29</option>
-          <option value="30-40">30-40</option>
-        </select>
-      </div>
-
-      <div className="search">
+      <form onSubmit={handleSearch} className="search">
         <p>Search</p>
         <input
           type="text"
@@ -127,19 +127,29 @@ const Home = () => {
           value={tagLine}
           onChange={(e) => setTagLine(e.target.value)}
         />
-        <button onClick={handleSearch}>Search</button>
+        <button type="submit">
+          <img src={search_logo} alt="Search" />
+        </button>
+      </form>
+
+      <div className="lp">
+        <p>LP Gain</p>
+        <select value={lpRange} onChange={(e) => setLpRange(e.target.value)}>
+          <option value="5-16">5-16</option>
+          <option value="17-24">17-24</option>
+          <option value="25-29">25-29</option>
+          <option value="30-40">30-40</option>
+        </select>
       </div>
 
       <div className="result">
-        {loading && <p>Loading...</p>}
+        {loading && <LoadingAnimation />}
         {eloData && !loading && (
           <div>
             {eloData.map((entry, index) => (
               <div key={index} className="mmr">
                 <img src={tierList[entry.tier]} alt={entry.tier} />
-                <p>
-                  This player has the MMR corresponding to: {entry.tier}
-                </p>
+                <p>This player has the MMR corresponding to: {entry.tier}</p>
               </div>
             ))}
           </div>

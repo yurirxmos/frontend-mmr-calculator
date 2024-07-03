@@ -1,105 +1,163 @@
-.home {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    color: white;
+.loading-animation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
-.header, .explanation {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+.spinner {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #4e4e4e;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+}
+
+.header,
+.explanation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 2rem;
 }
 
 .lp {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
 
-    margin: 1rem;
-    gap: 10px;
+  margin: 1rem;
+  gap: 10px;
+  font-size: 12px;
 }
 
 .lp select {
-    background-color: #3b3b3b;
-    font-family: "inter";
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 20px;
+  background-color: #3b3b3b;
+  font-family: "inter";
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  appearance: none; /* Remove a seta padrão */
+  -webkit-appearance: none; /* Remove a seta padrão no Safari */
+  -moz-appearance: none; /* Remove a seta padrão no Firefox */
+  background-image: url("/src/assets/imgs/arrow_down.png"); /* Seta personalizada */
+  background-repeat: no-repeat;
+  background-position: right 10px center; /* Posiciona a seta à direita */
+  background-size: 15px; /* Tamanho da seta */
+  padding-right: 30px; /* Espaço para a seta */
+}
+
+.lp select:hover {
+  cursor: pointer;
+}
+
+.lp select:focus {
+  outline: 0;
 }
 
 .search {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  font-size: 12px;
 }
 
 .search p {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .search input {
-    background-color: #3b3b3b;
-    font-family: "inter";
-    color: white;
-    border: none;
-    padding: 15px;
+  background-color: #3b3b3b;
+  font-family: "inter";
+  color: white;
+  border: none;
+  padding: 15px;
 }
 
 .search input:nth-child(2) {
-    border-radius: 20px 0 0 20px;
+  border-radius: 20px 0 0 20px;
 }
 
 .search input:focus {
-    border: none;
-    outline: 0;
+  border: none;
+  outline: 0;
 }
 
 .search button {
-    background-color: #3b3b3b;
-    color: white;
-    font-family: "inter";
-    border: none;
-    padding: 15px;
-    border-radius: 0 20px 20px 0;
+  background-color: #3b3b3b;
+  color: white;
+  font-family: "inter";
+  border: none;
+  padding: 15px;
+  border-radius: 0 20px 20px 0;
 }
 
 .search button:hover {
-    cursor: pointer;
-    transition: 600ms;
+  cursor: pointer;
+  transition: 600ms;
+}
+
+.search button img {
+    width: 12px;
+}
+
+.search button img:hover {
+    opacity: 40%;
+    transition: 300ms;
+}
+
+.header img {
+    width: 260px;
 }
 
 .header h1 {
-    font-weight: 1000;
-    font-size: 60px;
+  font-weight: 1000;
+  font-size: 60px;
 }
 
 .header h2 {
-    font-weight: 1000;
-    font-size: 20px;
+  font-weight: 1000;
+  font-size: 20px;
 }
 
 .result {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 3rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 3rem 0;
 }
 
 .result .mmr {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .explanation h1 {
-    margin-top: 10rem;
-    font-weight: 900;
-    font-size: 40px;
+  margin-top: 10rem;
+  font-weight: 900;
+  font-size: 40px;
 }
